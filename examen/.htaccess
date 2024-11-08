@@ -1,0 +1,22 @@
+Options +FollowSymLinks -MultiViews -Indexes
+RewriteEngine on
+
+# Asegurar acceso adecuado a los archivos estáticos
+<FilesMatch "\.(css|js|jpg|jpeg|png|gif|ico|svg|eot|ttf|woff|woff2)$">
+    <IfModule mod_headers.c>
+        Header set Cache-Control "max-age=2592000, public"
+    </IfModule>
+</FilesMatch>
+
+# Reglas de reescritura para páginas
+RewriteRule ^sample/?$ views/sample.php 
+RewriteRule ^home/?$ views/home.php 
+
+RewriteRule ^products/?$ views/products/index.php 
+RewriteRule ^products/create/?$ views/products/create.php 
+RewriteRule ^products/details/([^\/]+)/?$ views/products/details.php?slug=$1 [L]
+RewriteRule ^products/update/([^\/]+)/?$ views/products/update.php?slug=$1 [L]
+
+# Manejo de errores 404 (comentado)
+#RewriteCond %{REQUEST_URI} ^\/404/$
+#RewriteRule ^(.*)$ /views/errors/404.php [L]
